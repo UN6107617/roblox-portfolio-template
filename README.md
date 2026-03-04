@@ -44,9 +44,91 @@ To ensure a professional appearance with an SSL certificate (HTTPS), it is recom
 
 1. Download index.php.
 2. Open the file in a text editor.
-3. Edit the configuration section at the top (Lines 5 to 70).
+3. Edit the configuration section at the top (Lines 7 to 51).
 4. Define variables such as roblox_id, theme_color, bio, and title.
 5. Upload the file to your hosting provider.
+
+
+## Docs
+
+This portfolio system uses official public Roblox Web APIs to dynamically fetch game and avatar data.
+
+
+### 1. User Created Games
+
+API Endpoint:  
+https://games.roblox.com/v2/users/{userId}/games  
+
+Official Documentation:  
+https://create.roblox.com/docs/en-us/cloud/reference/domains/games?auth=none#games_get_v2_users__userId__games  
+
+Description:  
+Returns a list of public experiences created by the specified user.
+
+Used for:
+- Fetching public games
+- Retrieving universeId and rootPlaceId
+- Displaying game name and description
+
+Parameters used in this project:
+- accessFilter=2 (Public games only)
+- limit=10
+- sortOrder=Asc
+
+Example:
+https://games.roblox.com/v2/users/319189457/games?accessFilter=2&limit=10&sortOrder=Asc
+
+
+### 2. Game Thumbnail Assets
+
+API Endpoint:  
+https://thumbnails.roblox.com/v1/assets  
+
+Official Documentation:  
+https://create.roblox.com/docs/en-us/cloud/reference/features/thumbnails?auth=none#thumbnails_get_v1_assets  
+
+Description:  
+Returns thumbnail images for Roblox assets.
+
+Used for:
+- Fetching visual preview images for games
+- Displaying thumbnails inside the portfolio cards
+
+Note:  
+This project specifically uses the games icons endpoint under the thumbnails domain.
+
+
+### 3. User Avatar Headshot
+
+API Endpoint:  
+https://thumbnails.roblox.com/v1/users/avatar-headshot  
+
+Official Documentation:  
+https://create.roblox.com/docs/en-us/cloud/reference/domains/thumbnails?auth=none#thumbnails_get_v1_users_avatar_headshot  
+
+Description:  
+Returns the avatar headshot image for a specific user.
+
+Used for:
+- Displaying the developer profile picture on the homepage
+
+Parameters used:
+- userIds
+- size=420x420
+- format=Png
+- isCircular=false
+
+Example:
+https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=319189457&size=420x420&format=Png&isCircular=false
+
+## Notes
+
+- All endpoints used are public.
+- No authentication or API key is required.
+- cURL must be enabled on the hosting environment.
+- Responses are parsed using JSON decoding in PHP.
+
+
 
 ## License
 
