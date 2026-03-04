@@ -8,9 +8,9 @@ $name         = "UN6107617";            // Your (Display) Name
 $roblox_id    = "319189457";          // Your Roblox User ID
 $discord_id   = "550752986343931916"; // Your Discord User ID
 $for_hire     = "No";                // Change to "No" if you are closed. Options: "Yes" or "No"
-$title        = "Roblox Dev";         // Your main headline (e.g. Scripter, Builder, UI Designer)
+$title        = "Web Dev";         // Your main headline (e.g. Scripter, Builder, UI Designer) try not to use more then 10 characters
 $title_color  = "blue-500";            // Options: white, blue-500, red-500, yellow-400, etc.
-$bio          = "Specialized in Luau scripting and system architecture. Creating immersive experiences since 2018.";
+$bio          = "Focused on backend systems and clean web architecture. Building practical and scalable solutions.";
 $bio_color    = "white";              // Options: white, blue-500, red-500, yellow-400, etc.
 
 // 2. THEME SETTINGS
@@ -33,16 +33,29 @@ $seo_favicon     = ""; // Optional: URL to a Favicon image. If empty, it uses yo
 
 // 5. TECH STACK (Add as many as you want)
 $tools = [
-    "Luau"          => ["years" => 5, "desc" => "Specialized in OOP, complex data-stores, and optimization."],
-    "Roblox Studio" => ["years" => 6, "desc" => "Expert in level design, physics, and UI systems."],
-    "Blender"       => ["years" => 3, "desc" => "Experienced in low-poly modeling and asset rigging."],
-    "Git"           => ["years" => 2, "desc" => "Version control for team projects and Rojo integration."]
+    "HTML" => [
+        "years" => 7,
+        "desc" => "Building structured and responsive layouts since 2019."
+    ],
+    "CSS / TailwindCSS" => [
+        "years" => 2,
+        "desc" => "Creating modern UI systems using utility-first styling."
+    ],
+    "PHP" => [
+        "years" => 1,
+        "desc" => "Developing backend logic, API integrations, and dynamic systems."
+    ],
+    "MySQL" => [
+        "years" => 1,
+        "desc" => "Working with relational databases and structured data handling."
+    ]
 ];
 
 // 6. CONTACT LINKS
 $links = [
     "Roblox Profile" => "https://www.roblox.com/users/$roblox_id/profile",
     "Discord"        => "https://discord.com/users/$discord_id",
+  	"GitHub"         => "https://github.com/UN6107617",
     "RBLXTax.com"    => "https://rblxtax.com",
     
     // Currently Hidden (Commented out):
