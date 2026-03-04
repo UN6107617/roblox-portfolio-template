@@ -139,7 +139,7 @@ $my_games = $games_data['data'] ?? [];
         overflow: hidden; 
     }
 
-    /* Animatie voor avatar */
+    /* Animation For avatar */
     @keyframes bounce-slow {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-10px); }
@@ -148,7 +148,7 @@ $my_games = $games_data['data'] ?? [];
 
 	section {
     display: none;
-    /* Ruimte boven de sectie zodat de titel niet onder de navbar verdwijnt */
+    /* Space above the section so that the title doesn't disappear below the navbar */
     scroll-margin-top: 120px; 
 	}
 </style>
