@@ -25,9 +25,9 @@ $glass_bg     = "rgba(30, 41, 59, 0.5)"; // Card background (with transparency)
 $card_border  = "rgba(255, 255, 255, 0.08)"; // Subtle border around cards
 
 // 4. SEO & META SETTINGS (For Google & Discord Embeds)
-$seo_title       = "$name | Professional Roblox Developer";
-$seo_description = "Check out my portfolio! I am a Roblox developer specializing in $bio";
-$seo_keywords    = "Roblox, Developer, Portfolio, Luau, Scripting, Game Design";
+$seo_title       = "$name | Web Developer";
+$seo_description = "Check out my portfolio! I am a Web developer specializing in $bio";
+$seo_keywords    = "Web, Developer, Portfolio, HTML, PHP";
 $seo_image       = ""; // Optional: URL to a banner image. If empty, it uses your Roblox avatar.
 $seo_favicon     = ""; // Optional: URL to a Favicon image. If empty, it uses your Roblox avatar.
 
