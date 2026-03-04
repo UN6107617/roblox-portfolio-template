@@ -37,7 +37,7 @@ $tools = [
         "years" => 7,
         "desc" => "Building structured and responsive layouts since 2019."
     ],
-    "CSS / TailwindCSS" => [
+    "CSS / Tailwind" => [
         "years" => 2,
         "desc" => "Creating modern UI systems using utility-first styling."
     ],
