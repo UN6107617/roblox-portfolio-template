@@ -274,7 +274,7 @@ $my_games = $games_data['data'] ?? [];
   <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 md:flex-row">
     <div class="text-left">
       <p class="font-black text-<?php echo $theme_color; ?>-500 uppercase italic"><?php echo $name; ?></p>
-      <p class="text-[10px] font-bold tracking-widest text-gray-500 uppercase">Roblox Developer Portfolio © 2026</p>
+      <p class="text-[10px] font-bold tracking-widest text-gray-500 uppercase">Roblox Developer Portfolio © <?php echo date('Y'); ?></p>
     </div>
 
     <div class="flex flex-col gap-2 md:items-end">
