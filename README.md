@@ -133,7 +133,7 @@ A fully static HTML version of this portfolio is also available.
 This version does not require PHP and can be hosted on platforms like GitHub Pages. It uses the same API system with caching for optimal performance.
 
 View the HTML version here:
-[https://github.com/your-repo/html-version](https://github.com/UN6107617/roblox-portfolio-template-html/)
+https://github.com/UN6107617/roblox-portfolio-template-html/
 
 ## License
 
