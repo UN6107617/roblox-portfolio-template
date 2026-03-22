@@ -63,33 +63,44 @@ $links = [
     // "Resume/Docs" => "https://google.com"
 ];
 
+//7 Extra Projects
+$extraProjects = [
+    [
+        "name" => "RBLXTax.com",
+        "desc" => "Roblox Tax & DevEx Calculator",
+        "image" => "https://cdn.un6107617.dev/rblxtax.webp", 
+        "link" => "https://rblxtax.com?ref=UN6107617"
+    ]
+// Leave Empty [] if you have no extra projects.
+];
+
+
 // ==========================================
-//             CORE LOGIC (Do not touch)
+//             CORE LOGIC (Optimized)
 // ==========================================
-function proxyGet($url) {
+function fetchPortfolioData($userId) {
+    $url = "https://api.un6107617.dev/portfolio/" . $userId;
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0');
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     $result = curl_exec($ch);
     curl_close($ch);
-    return $result;
+    return json_decode($result, true);
 }
 
-// First, get the avatar (needed for favicon and seo)
-$avatar_res = proxyGet("https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=$roblox_id&size=420x420&format=Png&isCircular=false");
-$avatar_url = json_decode($avatar_res, true)['data'][0]['imageUrl'] ?? "";
+// Haal alle data in één keer op via jouw API
+$api_data = fetchPortfolioData($roblox_id);
 
-// Logic for favicon and SEO image
+// Avatar & SEO Logic
+$avatar_url = $api_data['user']['avatar'] ?? "";
 $final_favicon = !empty($seo_favicon) ? $seo_favicon : $avatar_url;
 if(empty($seo_image)) { $seo_image = $avatar_url; }
 
-// Get games
-$games_res = proxyGet("https://games.roblox.com/v2/users/$roblox_id/games?accessFilter=2&limit=10&sortOrder=Asc");
-$games_data = json_decode($games_res, true);
-$my_games = $games_data['data'] ?? [];
+// Games Logic
+$my_games = $api_data['games'] ?? [];
 ?>
 
 <!DOCTYPE html>
@@ -181,7 +192,7 @@ $my_games = $games_data['data'] ?? [];
             </div>
             <div class="hidden md:flex space-x-8 text-xs font-black uppercase tracking-[0.2em]">
                 <a href="#" class="hover:text-<?php echo $theme_color; ?>-400 transition">Home</a>
-                <a href="#work" class="hover:text-<?php echo $theme_color; ?>-400 transition">Experience</a>
+                <a href="#work" class="hover:text-<?php echo $theme_color; ?>-400 transition">Work</a>
                 <a href="#tools" class="hover:text-<?php echo $theme_color; ?>-400 transition">Stack</a>
                 <a href="#contact" class="hover:text-<?php echo $theme_color; ?>-400 transition">Contact</a>
             </div>
@@ -193,7 +204,7 @@ $my_games = $games_data['data'] ?? [];
         </div>
         <div id="mobile-menu" class="hidden absolute top-full left-0 w-full glass border-t border-white/5 py-6 px-6 flex flex-col space-y-4 text-center font-black uppercase tracking-widest italic">
             <a href="#" onclick="toggleMenu()" class="text-sm hover:text-<?php echo $theme_color; ?>-400 py-2">Home</a>
-            <a href="#work" onclick="toggleMenu()" class="text-sm hover:text-<?php echo $theme_color; ?>-400 py-2 border-t border-white/5">Experience</a>
+            <a href="#work" onclick="toggleMenu()" class="text-sm hover:text-<?php echo $theme_color; ?>-400 py-2 border-t border-white/5">Work</a>
             <a href="#tools" onclick="toggleMenu()" class="text-sm hover:text-<?php echo $theme_color; ?>-400 py-2 border-t border-white/5">Stack</a>
             <a href="#contact" onclick="toggleMenu()" class="text-sm hover:text-<?php echo $theme_color; ?>-400 py-2 border-t border-white/5 border-b">Contact</a>
         </div>
@@ -215,38 +226,51 @@ $my_games = $games_data['data'] ?? [];
         <a href="#contact" class="glass px-10 py-4 rounded-xl font-black uppercase italic hover:bg-white/10 transition-all">Get in Touch</a>
     </div>
 </section>
-
+<!--work section-->
         <section id="work">
-            <div class="flex items-center gap-4 mb-12">
-                <div class="h-10 w-2" style="background-color: var(--accent);"></div>
-                <h2 class="text-5xl font-black italic uppercase tracking-tighter">My Work</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <?php foreach($my_games as $game): 
-                    $universeId = $game['id']; 
-                    $rootPlaceId = $game['rootPlace']['id']; 
-                    $thumb_res = proxyGet("https://thumbnails.roblox.com/v1/games/icons?universeIds=$universeId&returnPolicy=PlaceHolder&size=512x512&format=Png&isCircular=false");
-                    $thumb_json = json_decode($thumb_res, true);
-                    $thumb_url = $thumb_json['data'][0]['imageUrl'] ?? "";
-                ?>
-                <div class="glass rounded-[2rem] overflow-hidden group border border-white/5 transition-all hover:border-<?php echo $theme_color; ?>-500/30 flex flex-col">
+    <div class="flex items-center gap-3 md:gap-4 mb-8 md:mb-12">
+        <div class="h-8 md:h-10 w-2" style="background-color: <?php echo $accent_hex; ?>;"></div>
+        <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter">My Work</h2>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        
+        <?php if (!empty($extraProjects)): ?>
+            <?php foreach ($extraProjects as $project): ?>
+                <div class="glass rounded-[1.5rem] md:rounded-[2rem] overflow-hidden flex flex-col group border border-white/5" style="background: <?php echo $glass_bg; ?>; border-color: <?php echo $card_border; ?>;">
                     <div class="img-container">
-                        <img src="<?php echo $thumb_url; ?>" alt="Game Icon">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0b1120] via-transparent to-transparent opacity-80"></div>
+                        <img src="<?php echo $project['image']; ?>" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                     </div>
-                    <div class="p-8 flex flex-col flex-grow">
-                        <h3 class="text-3xl font-black mb-3 italic uppercase tracking-tight"><?php echo htmlspecialchars($game['name']); ?></h3>
-                        <p class="text-gray-400 mb-8 leading-relaxed font-medium desc-truncate italic"><?php echo htmlspecialchars($game['description'] ?: "No description provided."); ?></p>
-                        <div class="mt-auto">
-                            <a href="https://www.roblox.com/games/<?php echo $rootPlaceId; ?>/" target="_blank" class="inline-flex items-center gap-2 text-<?php echo $theme_color; ?>-400 font-black text-xs tracking-widest uppercase hover:text-white transition group">
-                                Open Experience <span class="group-hover:translate-x-1 transition-transform">→</span>
-                            </a>
+                    <div class="p-6 md:p-8 text-left">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl md:text-3xl font-black italic uppercase tracking-tighter text-white"><?php echo $project['name']; ?></h3>
+                            <span class="text-[10px] bg-white/10 px-2 py-1 rounded font-bold uppercase tracking-widest opacity-50">External</span>
                         </div>
+                        <p class="opacity-60 text-sm italic mb-6 line-clamp-3"><?php echo $project['desc']; ?></p>
+                        <a href="<?php echo $project['link']; ?>" target="_blank" class="font-black text-xs uppercase" style="color: <?php echo $accent_hex; ?>;">View Project →</a>
                     </div>
                 </div>
-                <?php endforeach; ?>
-            </div>
-        </section>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+        <?php if (!empty($my_games)): ?>
+            <?php foreach ($my_games as $game): ?>
+                <div class="glass rounded-[1.5rem] md:rounded-[2rem] overflow-hidden flex flex-col group border border-white/5" style="background: <?php echo $glass_bg; ?>; border-color: <?php echo $card_border; ?>;">
+                    <div class="img-container">
+                        <img src="<?php echo $game['thumbnail']; ?>" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <div class="p-6 md:p-8 text-left">
+                        <h3 class="text-2xl md:text-3xl font-black mb-2 italic uppercase tracking-tighter text-white"><?php echo $game['name']; ?></h3>
+                        <p class="opacity-60 text-sm italic mb-6 line-clamp-3"><?php echo !empty($game['description']) ? $game['description'] : 'No description provided.'; ?></p>
+                        <a href="https://www.roblox.com/games/<?php echo $game['placeId']; ?>" target="_blank" class="font-black text-xs uppercase" style="color: <?php echo $accent_hex; ?>;">Launch Experience →</a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+    </div>
+</section>
+<!--work section-->
 
         <section id="tools">
             <div class="flex flex-col items-center mb-12 text-center">
